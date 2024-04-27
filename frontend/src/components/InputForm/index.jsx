@@ -66,7 +66,7 @@ export default function InputForm() {
   }
 
   async function handleForm() {
-    const token = "6Lf1Ur0pAAAAAF9gQw61G-mip8z0vp4q0Gh80S_e";
+    const token = await reRecaptcha.current.executeAsync();
 
     if (
       name === "" ||
@@ -122,7 +122,7 @@ export default function InputForm() {
       .then(() => {
           setSubmitted(true);
           navigate("/redirect");
-          // reRecaptcha.current.reset();
+          reRecaptcha.current.reset();
         })
         .catch((err) => {
           if (err.response && err.response.status === 429) {
@@ -136,7 +136,7 @@ export default function InputForm() {
             const e =err.response.data.message
             alert(e);
             setSubmitted(false);
-            // reRecaptcha.current.reset();
+            reRecaptcha.current.reset();
           }
         });
     } else {
@@ -404,6 +404,13 @@ export default function InputForm() {
             </div>
           </div>
         </div>
+        <ReCAPTCHA
+        className="recaptcha"
+        ref={reRecaptcha}
+        size="invisible"
+        sitekey={recaptchaSiteKey}
+        type="image"
+      />
         <div className="btn">
           <input type="submit" value="Register" onClick={() => handleForm()} />
         </div>

@@ -12,8 +12,6 @@ const PASSWORD = process.env.EMAIL_PASSWORD;
 const secretKey = process.env.VITE_SECRET_KEY;
 
 const origin = process.env.ORIGIN;
-console.log(USERNAME)
-console.log(PASSWORD)
 const uri = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 // const corsOptions = {

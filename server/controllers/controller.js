@@ -8,9 +8,7 @@ dotenv.config();
 const USERNAME = process.env.EMAIL_USERNAME;
 const PASSWORD = process.env.EMAIL_PASSWORD;
 const secretKey = process.env.VITE_SECRET_KEY;
-import emailValidator from "deep-email-validator"
-console.log(USERNAME)
-console.log(PASSWORD)
+import emailValidator from "deep-email-validator";
 
 const registrationSchema = Joi.object({
   Name: Joi.string().required(),
@@ -22,25 +20,26 @@ const registrationSchema = Joi.object({
   Year: Joi.string().required(),
   Phone: Joi.string().length(10).required(),
   Token: Joi.string().required(),
-  Interest: Joi.array().items(Joi.string())
+  Interest: Joi.array().items(Joi.string()),
 });
 
 //function for sending  mail by nodemailer
-async function sendEmailNodemailer(toMail,name,roll){
+async function sendEmailNodemailer(toMail, name, roll) {
   var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth:{
+    service: "gmail",
+    auth: {
       user: USERNAME,
-      pass: PASSWORD                 //always use app password
-    }
-  })
+      pass: PASSWORD, //always use app password
+    },
+  });
   await transporter.sendMail({
     from: USERNAME,
     to: toMail,
-    subject: 'Registration of COMMIT',
+    subject: "Registration of COMMIT",
     headers: {
-      "X-My-Header": 'https://scontent-del2-1.xx.fbcdn.net/v/t39.30808-6/305819699_484347750365637_2455990691136540320_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pVAwo9W79ggAb7h7gEZ&_nc_ht=scontent-del2-1.xx&oh=00_AfAQUvBjQM7RfEC_mbDnIng-l3MYBPUO9l3MtU2S02IBPw&oe=6625C5B2'
-  },
+      "X-My-Header":
+        "https://scontent-del2-1.xx.fbcdn.net/v/t39.30808-6/305819699_484347750365637_2455990691136540320_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pVAwo9W79ggAb7h7gEZ&_nc_ht=scontent-del2-1.xx&oh=00_AfAQUvBjQM7RfEC_mbDnIng-l3MYBPUO9l3MtU2S02IBPw&oe=6625C5B2",
+    },
     html: `
     <font face="Google Sans" color="#444444" >
         <div style="font-size:110%">
@@ -54,10 +53,9 @@ async function sendEmailNodemailer(toMail,name,roll){
             <p style="margin:0">TEAM OSSC</p>
         </div>
     </font>
-    `
-  })
+    `,
+  });
 }
-
 
 //function for sending  mail by sendgrid
 async function sendEmail(emailTypeFunction, toMail, fromMail, roll) {
@@ -78,7 +76,7 @@ async function sendEmail(emailTypeFunction, toMail, fromMail, roll) {
 
 // check if email does exist or not
 async function isEmailValid(email) {
-  return emailValidator.validate(email)
+  return emailValidator.validate(email);
 }
 
 function getEmail() {
@@ -121,13 +119,23 @@ export const create = async (req, res) => {
     }
     console.log(decryptedDataJSON);
 
-    const { Name, Gender, Branch, Roll, Email, Phone, Year, Hostel, Token,Interest } =
-      decryptedDataJSON;
-    // const url = https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${Token};
-    // const response = await fetch(url, {
-    //   method: "POST",
-    // });
-    // const data = await response.json();
+    const {
+      Name,
+      Gender,
+      Branch,
+      Roll,
+      Email,
+      Phone,
+      Year,
+      Hostel,
+      Token,
+      Interest,
+    } = decryptedDataJSON;
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${Token}`;
+    const response = await fetch(url, {
+      method: "POST",
+    });
+    const data = await response.json();
     const oldUser = await Registrations.findOne({
       $or: [{ Email }, { Phone }, { Roll }],
     });
@@ -135,11 +143,11 @@ export const create = async (req, res) => {
     if (oldUser) {
       return res.status(409).json({ message: "User already exists" });
     } else {
-      // if (data.success == true) {
-        const {valid, reason, validators} = await isEmailValid(Email)
-        console.log(valid)
+      if (data.success == true) {
+        const { valid, reason, validators } = await isEmailValid(Email);
+        // console.log(valid);
         // console.log(data)
-        if(valid){
+        if (valid) {
           const result = await Registrations.create({
             Name,
             Gender,
@@ -149,26 +157,26 @@ export const create = async (req, res) => {
             Hostel,
             Year,
             Phone,
-            Interest
+            Interest,
           });
-         console.log(result)
-          sendEmailNodemailer(Email,Name,Roll)
-  
+          console.log(result);
+          sendEmailNodemailer(Email, Name, Roll);
+
           res.status(201).json("You have been registered successfully");
-        }else{
-          console.log("Success")
-          res.status(404).json({message: "Email does not exist"})
+        } else {
+          console.log("Success");
+          res.status(404).json({ message: "Email does not exist" });
         }
-      // } else {
-      //   res
-      //     .status(421)
-      //     .json({ message: "Please verify that you are not a robot" });
-      // }
+      } else {
+        res
+          .status(421)
+          .json({ message: "Please verify that you are not a robot" });
+      }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
-  }
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const find = async (req, res) => {
