@@ -7,8 +7,8 @@ import Select from "react-select";
 import { MultiSelect } from "react-multi-select-component";
 import ReCAPTCHA from "react-google-recaptcha";
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-const secretKey = "6Lf1Ur0pAAAAAF9gQw61G-mip8z0vp4q0Gh80S_e"
-const baseURL = "http://localhost:5000";
+const secretKey = import.meta.env.VITE_SECRET_KEY;
+const baseURL = import.meta.env.VITE_BASE_URL;
 const origin = import.meta.env.VITE_ORIGIN;
 axios.defaults.baseURL = baseURL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -121,8 +121,8 @@ export default function InputForm() {
       .post("/commit", { encryptedData })
       .then(() => {
           setSubmitted(true);
-          navigate("/redirect");
           reRecaptcha.current.reset();
+          navigate("/redirect");
         })
         .catch((err) => {
           if (err.response && err.response.status === 429) {
@@ -130,7 +130,7 @@ export default function InputForm() {
             setSubmitted(false);
             alert("Too many requests; please wait a minute");
             reRecaptcha.current.reset();
-            setRateLimited(true);
+            // setRateLimited(true);
             setResetTime(reset * 1000);
           } else {
             const e =err.response.data.message
