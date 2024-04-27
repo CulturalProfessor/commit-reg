@@ -67,7 +67,7 @@ export default function InputForm() {
 
   async function handleForm() {
     console.log("handleForm",recaptchaSiteKey,reRecaptcha);
-    const token = await reRecaptcha.current.executeAsync();
+    const token = await reRecaptcha.current.execute();
     console.log(token);
 
     if (
@@ -406,14 +406,15 @@ export default function InputForm() {
             </div>
           </div>
         </div>
+        <div className="btn">
         <ReCAPTCHA
         className="recaptcha"
         ref={reRecaptcha}
         size="invisible"
+        onChange={(token) => console.log(token)}
         sitekey={recaptchaSiteKey}
         type="image"
       />
-        <div className="btn">
           <input type="submit" value="Register" onClick={() => handleForm()} />
         </div>
       </form>
