@@ -66,98 +66,87 @@ export default function InputForm() {
   }
 
   async function handleForm() {
-    console.log("handleForm",recaptchaSiteKey,reRecaptcha);
-    const token = reRecaptcha.current.execute();
-    console.log(token);
+    console.log("handleForm", recaptchaSiteKey, reRecaptcha);
 
-    if (
-      name === "" ||
-      roll === "" ||
-      email === "" ||
-      branch === "" ||
-      phone === "" ||
-      hostelOrDayScholar === "" ||
-      year === "" ||
-      gender === ""
-    ) {
-      alert("Please fill all the fields");
-      return;
-    }
+    try {
+      // Retrieve the reCAPTCHA token
+      const token = await reRecaptcha.current.executeAsync();
+      console.log(token);
 
-    const isNameValid = validateName(name);
-    const isEmailValid = validateEmail(email);
-    const isPhoneValid = validatePhoneNumber(phone);
-    const isRollValid = validateRoll(roll);
-    const isBranchValid = validateBranch(branch);
-
-    if (
-      isEmailValid &&
-      isPhoneValid &&
-      isNameValid &&
-      isRollValid &&
-      isBranchValid
-    ) {
-      let UpperCaseBranch = branch.toUpperCase();
-      const data = {
-        Name: name,
-        Gender: gender,
-        Branch: UpperCaseBranch,
-        Roll: roll,
-        Email: email,
-        Hostel: hostelOrDayScholar,
-        Year: year,
-        Phone: phone,
-        Token: token,
-        Interest: interest,
-      };
-      setForm(data);
-      // console.log(data.Interest)
-      // console.log(secretKey);
-      const dataToencrypt = data;
-      const encryptedData = CryptoJS.AES.encrypt(
-        JSON.stringify(dataToencrypt),
-        secretKey
-      ).toString();
-      
-      axios
-      .post("/commit", { encryptedData })
-      .then(() => {
-          setSubmitted(true);
-          navigate("/redirect");
-          // reRecaptcha.current.reset();
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 429) {
-            const reset = err.response.headers["x-ratelimit-reset"];
-            setSubmitted(false);
-            alert("Too many requests; please wait a minute");
-            reRecaptcha.current.reset();
-            // setRateLimited(true);
-            setResetTime(reset * 1000);
-          } else {
-            const e =err.response.data.message
-            alert(e);
-            setSubmitted(false);
-            reRecaptcha.current.reset();
-          }
-        });
-    } else {
-      if (!isNameValid) {
-        console.log("Invalid Name");
-        alert("Invalid Name");
-      } else if (!isRollValid) {
-        console.log("Invalid Roll", isRollValid);
-        alert("Invalid Student Number");
-      } else if (!isEmailValid) {
-        console.log("Invalid Email");
-        alert("Invalid Email");
-      } else if (!isBranchValid) {
-        console.log("Invalid Branch");
-        alert("Invalid Branch");
-      } else if (!isPhoneValid) {
-        console.log("Invalid Phone Number");
-        alert("Invalid Phone Number");
+      if (
+        name === "" ||
+        roll === "" ||
+        email === "" ||
+        branch === "" ||
+        phone === "" ||
+        hostelOrDayScholar === "" ||
+        year === "" ||
+        gender === ""
+      ) {
+        alert("Please fill all the fields");
+        return;
       }
+
+      const isNameValid = validateName(name);
+      const isEmailValid = validateEmail(email);
+      const isPhoneValid = validatePhoneNumber(phone);
+      const isRollValid = validateRoll(roll);
+      const isBranchValid = validateBranch(branch);
+
+      if (
+        isEmailValid &&
+        isPhoneValid &&
+        isNameValid &&
+        isRollValid &&
+        isBranchValid
+      ) {
+        let UpperCaseBranch = branch.toUpperCase();
+        const data = {
+          Name: name,
+          Gender: gender,
+          Branch: UpperCaseBranch,
+          Roll: roll,
+          Email: email,
+          Hostel: hostelOrDayScholar,
+          Year: year,
+          Phone: phone,
+          Token: token,
+          Interest: interest,
+        };
+        setForm(data);
+
+        // Encrypt the form data
+        const dataToEncrypt = data;
+        const encryptedData = CryptoJS.AES.encrypt(
+          JSON.stringify(dataToEncrypt),
+          secretKey
+        ).toString();
+
+        // Send the encrypted form data to the server
+        await axios.post("/commit", { encryptedData });
+        setSubmitted(true);
+        navigate("/redirect");
+      } else {
+        // Handle validation errors
+        if (!isNameValid) {
+          console.log("Invalid Name");
+          alert("Invalid Name");
+        } else if (!isRollValid) {
+          console.log("Invalid Roll", isRollValid);
+          alert("Invalid Student Number");
+        } else if (!isEmailValid) {
+          console.log("Invalid Email");
+          alert("Invalid Email");
+        } else if (!isBranchValid) {
+          console.log("Invalid Branch");
+          alert("Invalid Branch");
+        } else if (!isPhoneValid) {
+          console.log("Invalid Phone Number");
+          alert("Invalid Phone Number");
+        }
+      }
+    } catch (error) {
+      console.error("Error retrieving reCAPTCHA token:", error);
     }
   }
 
@@ -201,8 +190,8 @@ export default function InputForm() {
     const value = e.target.value;
     if (flag) {
       setInterest([...interest, value]);
-    }else{
-      setInterest([...interest.filter(tech => tech!==value)])
+    } else {
+      setInterest([...interest.filter((tech) => tech !== value)]);
     }
   };
 
@@ -407,14 +396,14 @@ export default function InputForm() {
           </div>
         </div>
         <div className="btn">
-        <ReCAPTCHA
-        className="recaptcha"
-        ref={reRecaptcha}
-        size="invisible"
-        onChange={(token) => console.log(token)}
-        sitekey={recaptchaSiteKey}
-        type="image"
-      />
+          <ReCAPTCHA
+            className="recaptcha"
+            ref={reRecaptcha}
+            size="invisible"
+            onChange={(token) => console.log(token)}
+            sitekey={recaptchaSiteKey}
+            type="image"
+          />
           <input type="submit" value="Register" onClick={() => handleForm()} />
         </div>
       </form>
