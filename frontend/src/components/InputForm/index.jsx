@@ -67,6 +67,7 @@ export default function InputForm() {
 
   async function handleForm() {
     const token = await reRecaptcha.current.executeAsync();
+    console.log(token);
 
     if (
       name === "" ||
@@ -109,7 +110,7 @@ export default function InputForm() {
         Interest: interest,
       };
       setForm(data);
-      console.log(data.Interest)
+      // console.log(data.Interest)
       // console.log(secretKey);
       const dataToencrypt = data;
       const encryptedData = CryptoJS.AES.encrypt(
