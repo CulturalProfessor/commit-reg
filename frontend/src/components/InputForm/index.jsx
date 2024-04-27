@@ -66,6 +66,7 @@ export default function InputForm() {
   }
 
   async function handleForm() {
+    console.log("handleForm",recaptchaSiteKey,reRecaptcha);
     const token = await reRecaptcha.current.executeAsync();
     console.log(token);
 
