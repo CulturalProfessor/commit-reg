@@ -125,7 +125,7 @@ export default function InputForm() {
         // Send the encrypted form data to the server
         await axios.post("/commit", { encryptedData });
         setSubmitted(true);
-        navigate("/redirect");
+        // navigate("/redirect");
       } else {
         // Handle validation errors
         if (!isNameValid) {
@@ -404,7 +404,14 @@ export default function InputForm() {
             sitekey={recaptchaSiteKey}
             type="image"
           />
-          <input type="submit" value="Register" onClick={() => handleForm()} />
+          <input
+            type="submit"
+            value="Register"
+            onClick={(e) => {
+              e.preventDefault(); // Prevent default form submission
+              handleForm(); // Call your form handling function
+            }}
+          />
         </div>
       </form>
     </section>
