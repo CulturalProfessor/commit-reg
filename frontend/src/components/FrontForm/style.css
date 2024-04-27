@@ -1,3 +1,50 @@
+@media (min-width: 640px){
+#poster{
+  width: 68vh;
+}
+
+.poster{
+  display: flex;
+  flex-direction: column;
+}
+}
+@media (max-width: 640px){
+  poster{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* #poster{
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+    /* margin-top: 100vh; */
+  /* } */
+  .posterImg{
+    padding-top: 29rem;
+        padding-bottom: 2rem;
+        /* object-fit: contain; */
+        height: 125vh;
+        width: 100vw;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .formbody {
   display: flex;
   width: 100%;
