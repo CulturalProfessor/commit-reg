@@ -41,18 +41,51 @@ async function sendEmailNodemailer(toMail, name, roll) {
         "https://scontent-del2-1.xx.fbcdn.net/v/t39.30808-6/305819699_484347750365637_2455990691136540320_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pVAwo9W79ggAb7h7gEZ&_nc_ht=scontent-del2-1.xx&oh=00_AfAQUvBjQM7RfEC_mbDnIng-l3MYBPUO9l3MtU2S02IBPw&oe=6625C5B2",
     },
     html: `
-    <font face="Google Sans" color="#444444" >
-        <div style="font-size:110%">
-            <p>Hi ${name}</p>
-            <p>Congratulations on completing 50% of your event registration! To finish your registration, please pay the fee in person at one of our help desks. Show this email for confirmation of your online registration. </p>
-            <br />
-            <h1>${roll}</h1>
-            <p>If you have any comments or questions dont hesitate to reach us at our help desk or through our ig <a href="https://www.instagram.com/team__oss?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="> team__oss </a></p>
-  
-            <p style="margin:0">Regards,</p>
-            <p style="margin:0">TEAM OSSC</p>
-        </div>
-    </font>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration Confirmation</title>
+    <style>
+        body {
+            font-family: "Google Sans", sans-serif;
+            color: #444444;
+        }
+        .container {
+            font-size: 110%;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin: 0 0 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Hi ${name},</h3>
+        <p>Congratulations on completing 50% of your event registration!</p>
+        <p>To finish your registration, please pay the fee in person at one of our help desks. Show this email for confirmation of your online registration.</p>
+        <p>If you have any comments or questions, don't hesitate to reach us at our help desk or through our Instagram Page <a href="https://www.instagram.com/team__oss?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">team__oss</a>. You can also contact our coordinators:</p>
+        <ul>
+            <li>Vinayak Sharma - 8957635277</li>
+            <li>Ayush Tripathi - 90261 92004</li>
+        </ul>
+        <p>Regards,</p>
+        <p>TEAM OSS</p>
+    </div>
+</body>
+</html>
+
     `,
   });
 }

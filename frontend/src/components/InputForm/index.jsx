@@ -29,7 +29,7 @@ export default function InputForm() {
   const [hostelOrDayScholar, setHostelOrDayScholar] = useState("");
   const [gender, setGender] = useState("");
   const [year, setYear] = useState("");
-  const reRecaptcha = useRef();
+  const reRecaptcha = useRef(null);
   const navigate = useNavigate();
 
   function validateName(name) {
@@ -65,13 +65,14 @@ export default function InputForm() {
     return false;
   }
 
-  function handleForm() {
-    console.log("handleForm", recaptchaSiteKey, reRecaptcha);
-
+  async function handleForm(e) {
     try {
+      e.preventDefault();
+
+      // console.log("handleForm", recaptchaSiteKey, reRecaptcha);
       // Retrieve the reCAPTCHA token
-      const token = reRecaptcha.current.execute();
-      console.log(token);
+      const token = await reRecaptcha.current.executeAsync();
+      // console.log(token);
 
       if (
         name === "" ||
@@ -84,7 +85,7 @@ export default function InputForm() {
         gender === ""
       ) {
         alert("Please fill all the fields");
-        return;
+        // return;
       }
 
       const isNameValid = validateName(name);
@@ -123,9 +124,27 @@ export default function InputForm() {
         ).toString();
 
         // Send the encrypted form data to the server
-        axios.post("/commit", { encryptedData });
-        setSubmitted(true);
-        // navigate("/redirect");
+        axios
+          .post("/commit", { encryptedData })
+          .then((res) => {
+            // setSubmitted(true);
+            reRecaptcha.current.reset();
+            navigate("/commit/redirect");
+          })
+          .catch((err) => {
+            if (err.response && err.response.status === 429) {
+              const reset = err.response.headers["x-ratelimit-reset"];
+              // setSubmitted(false);
+              alert("Too many requests; please wait a minute");
+              reRecaptcha.current.reset();
+              setRateLimited(true);
+              // setResetTime(reset * 1000);
+            } else {
+              alert(err.response.data.message);
+              // setSubmitted(false);
+              reRecaptcha.current.reset();
+            }
+          });
       } else {
         // Handle validation errors
         if (!isNameValid) {
@@ -171,19 +190,11 @@ export default function InputForm() {
   //   return () => clearInterval(intervalId);
   // }, [rateLimited, resetTime]);
 
-  useEffect(() => {
-    if (submitted) {
-      setName("");
-      setGender("");
-      setRoll("");
-      setEmail("");
-      setBranch("");
-      setPhone("");
-      setHostelOrDayScholar("");
-      setInterest("");
-      setSubmitted(false);
-    }
-  }, [submitted]);
+  // useEffect(() => {
+  //   if (submitted) {
+  //
+  //   }
+  // }, [submitted]);
 
   const handlecheck = (e) => {
     const flag = e.target.checked;
@@ -395,20 +406,19 @@ export default function InputForm() {
             </div>
           </div>
         </div>
+        <ReCAPTCHA
+          className="recaptcha"
+          ref={reRecaptcha}
+          size="invisible"
+          sitekey={recaptchaSiteKey}
+          type="image"
+        />
         <div className="btn">
-          <ReCAPTCHA
-            className="recaptcha"
-            ref={reRecaptcha}
-            size="invisible"
-            onChange={(token) => console.log(token)}
-            sitekey={recaptchaSiteKey}
-            // type="image"
-          />
           <input
             type="submit"
             value="Register"
-            onClick={() => {
-              handleForm();
+            onClick={async (e) => {
+              await handleForm(e);
             }}
           />
         </div>
