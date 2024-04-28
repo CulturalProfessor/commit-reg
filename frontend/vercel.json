@@ -18,8 +18,12 @@
       "destination": "/commit"
     },
     {
-      "source":"/redirect",
-      "destination":"//redirect"
+      "source": "/redirect",
+      "destination": "//redirect"
+    },
+    {
+      "source": "ossrndc.in/commit",
+      "destination": "https://ossrndc.in"
     }
   ]
 }
