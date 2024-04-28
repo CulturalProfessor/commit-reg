@@ -132,9 +132,10 @@ export default function InputForm() {
               headers: {
                 "Content-Type": "application/json",
                 "Authorization ": "Bearer",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Methods": "*",
+                "Access-Control-Allow-Origin": "https://ossrndc.in",
+                "Access-Control-Allow-Headers":
+                  "Content-Type, Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Credentials",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
                 "Access-Control-Allow-Credentials": true,
               },
             }

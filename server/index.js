@@ -33,7 +33,6 @@ app.use(
       "Access-Control-Allow-Credentials",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    preflightContinue: false,
     credentials: true,
   })
 );
