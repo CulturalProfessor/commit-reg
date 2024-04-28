@@ -65,12 +65,12 @@ export default function InputForm() {
     return false;
   }
 
-  async function handleForm() {
+  function handleForm() {
     console.log("handleForm", recaptchaSiteKey, reRecaptcha);
 
     try {
       // Retrieve the reCAPTCHA token
-      const token = await reRecaptcha.current.executeAsync();
+      const token = reRecaptcha.current.execute();
       console.log(token);
 
       if (
@@ -123,7 +123,7 @@ export default function InputForm() {
         ).toString();
 
         // Send the encrypted form data to the server
-        await axios.post("/commit", { encryptedData });
+        axios.post("/commit", { encryptedData });
         setSubmitted(true);
         // navigate("/redirect");
       } else {
@@ -407,9 +407,8 @@ export default function InputForm() {
           <input
             type="submit"
             value="Register"
-            onClick={async (e) => {
-              // e.preventDefault(); // Prevent default form submission
-              await handleForm(); // Call your form handling function
+            onClick={() => {
+              handleForm();
             }}
           />
         </div>
