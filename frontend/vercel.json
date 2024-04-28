@@ -15,11 +15,11 @@
   "redirects": [
     {
       "source": "/commit",
-      "destination": "/commit"
+      "destination": "https://ossrndc.in/"
     },
     {
       "source": "/redirect",
-      "destination": "//redirect"
+      "destination": "/redirect"
     },
     {
       "source": "ossrndc.in/commit",

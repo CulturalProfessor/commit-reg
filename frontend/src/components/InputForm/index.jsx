@@ -129,7 +129,7 @@ export default function InputForm() {
           .then((res) => {
             // setSubmitted(true);
             reRecaptcha.current.reset();
-            navigate("/commit/redirect");
+            navigate("/redirect");
           })
           .catch((err) => {
             if (err.response && err.response.status === 429) {
