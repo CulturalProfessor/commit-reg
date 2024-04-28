@@ -136,7 +136,6 @@ function getEmail() {
 }
 export const create = async (req, res) => {
   try {
-    console.log(req.body);
     const encryptedData = req.body.encryptedData;
     const decryptedData = CryptoJS.AES.decrypt(
       encryptedData,
@@ -152,6 +151,7 @@ export const create = async (req, res) => {
     }
     // console.log(decryptedDataJSON);
 
+    console.log(decryptedDataJSON);
     const {
       Name,
       Gender,
@@ -180,7 +180,7 @@ export const create = async (req, res) => {
         const { valid, reason, validators } = await isEmailValid(Email);
         console.log(valid);
         console.log(data)
-        if (valid) {
+        // if (valid) {
           const result = await Registrations.create({
             Name,
             Gender,
@@ -194,11 +194,13 @@ export const create = async (req, res) => {
           });
           // console.log(result);
           sendEmailNodemailer(Email, Name, Roll);
+          console.log("result",result)
           console.log("Success");
           res.status(200).json("You have been registered successfully");
-        } else {
-          res.status(404).json({ message: "Email does not exist" });
-        }
+          
+        // } else {
+        //   res.status(404).json({ message: "Email does not exist" });
+        // }
       } else {
         res
           .status(421)
