@@ -21,21 +21,12 @@ const PORT = process.env.PORT || 5000;
 // };
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://ossrndc.in",
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Access-Control-Allow-Origin",
-      "Access-Control-Allow-Headers",
-      "Access-Control-Allow-Methods",
-      "Access-Control-Allow-Credentials",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: "https://ossrndc.in",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use(ExpressMongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
