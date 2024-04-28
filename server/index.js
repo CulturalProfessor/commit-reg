@@ -67,6 +67,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Max-Age', '86400');
 
+  console.log("middleware");
   res.status(200);
   next();
 });

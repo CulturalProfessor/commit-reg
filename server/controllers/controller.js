@@ -178,8 +178,8 @@ export const create = async (req, res) => {
     } else {
       if (data.success == true) {
         const { valid, reason, validators } = await isEmailValid(Email);
-        // console.log(valid);
-        // console.log(data)
+        console.log(valid);
+        console.log(data)
         if (valid) {
           const result = await Registrations.create({
             Name,
