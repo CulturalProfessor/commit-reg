@@ -11,9 +11,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         {/* <Route path="/" element={<Redirect/>} /> */}
-        <Route path="/" element={<SiteInProgress />} />
-        <Route path="/commit" element={<App/>} />
-        <Route path="/commit/redirect" element={<Redirect />} />
+        {/* <Route path="/" element={<SiteInProgress />} /> */}
+        <Route path="/" element={<App/>} />
+        <Route path="/redirect" element={<Redirect />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
