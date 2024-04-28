@@ -195,7 +195,7 @@ export const create = async (req, res) => {
           // console.log(result);
           sendEmailNodemailer(Email, Name, Roll);
           console.log("Success");
-          res.status(201).json("You have been registered successfully");
+          res.status(200).json("You have been registered successfully");
         } else {
           res.status(404).json({ message: "Email does not exist" });
         }

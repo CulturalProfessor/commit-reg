@@ -36,6 +36,7 @@ const corsOptions = {
   ],
 };
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(ExpressMongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
