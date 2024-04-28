@@ -4,6 +4,18 @@ import cors from "cors";
 import dotenv from "dotenv";
 import routes from "./routes/routes.js";
 import ExpressMongoSanitize from "express-mongo-sanitize";
+import cron from "node-cron";
+
+cron.schedule("*/7 * * * *", () => {
+  fetch("https://mettl-hack.onrender.com/api")
+    .then(() => {
+      logger.info("Server kept awake successfully");
+    })
+    .catch((error) => {
+      logger.error("Error keeping server awake:", error.message);
+    });
+});
+
 
 dotenv.config();
 
@@ -61,11 +73,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Max-Age', '86400');
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Max-Age", "86400");
 
   console.log("middleware");
   res.status(200);
