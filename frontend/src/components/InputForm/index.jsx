@@ -130,9 +130,6 @@ export default function InputForm() {
           data: {
             encryptedData,
           },
-          headers: {
-            "Content-Type": "application/json",
-          },
           withCredentials: false,
         })
           .then((res) => {
