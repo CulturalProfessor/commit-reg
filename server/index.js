@@ -21,13 +21,27 @@ const PORT = process.env.PORT || 5000;
 // };
 const app = express();
 
-app.use(cors({
-  origin: ["https://ossrndc.in","https://commit-reg-frontend.vercel.app/","*", "http://localhost:5173"],
-  allowedHeaders: ["Content-Type","Authorization"],
-  methods: ["GET","POST","PUT","DELETE"],
-  preflightContinue: false,
-  credentials:true,
-}));
+app.use(
+  cors({
+    origin: [
+      "https://ossrndc.in",
+      "https://commit-reg-frontend.vercel.app/",
+      "*",
+      "http://localhost:5173",
+    ],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Methods",
+      "Access-Control-Allow-Credentials",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    preflightContinue: false,
+    credentials: true,
+  })
+);
 app.use(ExpressMongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
