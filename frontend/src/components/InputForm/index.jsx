@@ -128,8 +128,11 @@ export default function InputForm() {
           .post("/commit", { encryptedData })
           .then((res) => {
             // setSubmitted(true);
+            if (res.status === 200) {
+              // alert("Registration Successful");
+              navigate("/redirect");
+            }
             reRecaptcha.current.reset();
-            navigate("/redirect");
           })
           .catch((err) => {
             if (err.response && err.response.status === 429) {
