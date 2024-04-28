@@ -402,7 +402,7 @@ export default function InputForm() {
             size="invisible"
             onChange={(token) => console.log(token)}
             sitekey={recaptchaSiteKey}
-            type="image"
+            // type="image"
           />
           <input
             type="submit"

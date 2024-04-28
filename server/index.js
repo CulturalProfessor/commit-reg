@@ -23,6 +23,9 @@ const app = express();
 
 app.use(cors({
   origin: ["https://ossrndc.in","https://commit-reg-frontend.vercel.app/","*"],
+  allowedHeaders: ["Content-Type","Authorization"],
+  methods: ["GET","POST","PUT","DELETE"],
+  preflightContinue: false,
   credentials:true,
 }));
 app.use(ExpressMongoSanitize());
