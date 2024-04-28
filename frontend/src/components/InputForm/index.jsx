@@ -124,8 +124,17 @@ export default function InputForm() {
         ).toString();
 
         // Send the encrypted form data to the server
-        axios
-          .post("/commit", { encryptedData })
+        axios({
+          method: "post",
+          url: "/commit",
+          data: {
+            encryptedData,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: false,
+        })
           .then((res) => {
             // setSubmitted(true);
             if (res.status === 200) {
