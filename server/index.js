@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://ossrndc.in",
   credentials: true,
   optionSuccessStatus: 200,
 };
