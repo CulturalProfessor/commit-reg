@@ -408,7 +408,7 @@ export default function InputForm() {
             type="submit"
             value="Register"
             onClick={async (e) => {
-              e.preventDefault(); // Prevent default form submission
+              // e.preventDefault(); // Prevent default form submission
               await handleForm(); // Call your form handling function
             }}
           />
