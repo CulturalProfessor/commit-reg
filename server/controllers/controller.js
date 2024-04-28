@@ -92,7 +92,7 @@ async function sendEmailNodemailer(toMail, name, roll) {
 
 //function for sending  mail by sendgrid
 async function sendEmail(emailTypeFunction, toMail, fromMail, roll) {
-  console.log("process.env.SENDGRID_API_KEY:", process.env.SENDGRID_API_KEY);
+  // console.log("process.env.SENDGRID_API_KEY:", process.env.SENDGRID_API_KEY);
   try {
     const emailMessage = getEmail();
 
@@ -136,7 +136,7 @@ function getEmail() {
 }
 export const create = async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const encryptedData = req.body.encryptedData;
     const decryptedData = CryptoJS.AES.decrypt(
       encryptedData,
@@ -144,13 +144,13 @@ export const create = async (req, res) => {
     ).toString(CryptoJS.enc.Utf8);
     // console.log(decryptedData);
     const decryptedDataJSON = JSON.parse(decryptedData);
-    console.log(decryptedDataJSON);
+    // console.log(decryptedDataJSON);
     const { error } = registrationSchema.validate(decryptedDataJSON);
-    console.log(error);
+    // console.log(error);
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
-    console.log(decryptedDataJSON);
+    // console.log(decryptedDataJSON);
 
     const {
       Name,
@@ -192,12 +192,11 @@ export const create = async (req, res) => {
             Phone,
             Interest,
           });
-          console.log(result);
+          // console.log(result);
           sendEmailNodemailer(Email, Name, Roll);
-
+          console.log("Success");
           res.status(201).json("You have been registered successfully");
         } else {
-          console.log("Success");
           res.status(404).json({ message: "Email does not exist" });
         }
       } else {
