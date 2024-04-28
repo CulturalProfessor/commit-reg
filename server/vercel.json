@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "https://ossrndc.in",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "https://ossrndc.in" },
         {

@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors";
+// import cors from "cors";
 import dotenv from "dotenv";
 import routes from "./routes/routes.js";
 import ExpressMongoSanitize from "express-mongo-sanitize";
@@ -38,20 +38,20 @@ const app = express();
 // };
 // app.use(cors(corsOptions));
 // app.options("*", cors(corsOptions));
-app.use(ExpressMongoSanitize());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+app.options("*", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://ossrndc.in");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+  res.sendStatus(200);
+}); 
+app.use(ExpressMongoSanitize());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", routes);
 app.listen(PORT, () => {
