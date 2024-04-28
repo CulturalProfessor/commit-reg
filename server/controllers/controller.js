@@ -136,7 +136,7 @@ function getEmail() {
 }
 export const create = async (req, res) => {
   try {
-    res.setHeader("Access-Control-Allow-Origin", "https://ossrndc.in");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Methods",
       "GET, POST, OPTIONS, PUT, PATCH, DELETE"
