@@ -125,7 +125,20 @@ export default function InputForm() {
 
         // Send the encrypted form data to the server
         axios
-          .post("/commit", { encryptedData })
+          .post(
+            "/commit",
+            { encryptedData },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization ": "Bearer",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "*",
+                "Access-Control-Allow-Credentials": true,
+              },
+            }
+          )
           .then((res) => {
             // setSubmitted(true);
             reRecaptcha.current.reset();

@@ -23,12 +23,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "https://ossrndc.in",
-      "https://commit-reg-frontend.vercel.app/",
-      "*",
-      "http://localhost:5173",
-    ],
+    origin: "https://ossrndc.in",
     allowedHeaders: [
       "Content-Type",
       "Authorization",
