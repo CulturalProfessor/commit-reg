@@ -9,10 +9,10 @@ import cron from "node-cron";
 cron.schedule("*/7 * * * *", () => {
   fetch("https://mettl-hack.onrender.com/api")
     .then(() => {
-      logger.info("Server kept awake successfully");
+      console.log("Server is awake");
     })
     .catch((error) => {
-      logger.error("Error keeping server awake:", error.message);
+    console.log("Error: ", error);
     });
 });
 
