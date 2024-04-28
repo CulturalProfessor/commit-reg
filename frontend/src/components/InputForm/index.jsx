@@ -377,12 +377,12 @@ export default function InputForm() {
               value="Node.js"
               onChange={handlecheck}
             />
-            <span className="gender">Tech stack you are familiar with</span>
+            <p className="gender">Tech stack you are familiar with</p>
             <div className="category">
               <div className="tech">
                 <label htmlFor="circle-1">
                   <span className="circle one"></span>
-                  <span className="male">HTML,CSS&Javascript</span>
+                  <span className="male">HTML,CSS&JS</span>
                 </label>
               </div>
               <div className="tech">

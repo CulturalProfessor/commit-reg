@@ -1,23 +1,25 @@
-.page{
+.page {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.poster{
+.poster {
   margin-left: -15px;
 }
-
-.field{
+img {
+  height: 100vh;
+}
+.field {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 100px;
 }
 
-@media (max-width: 640px){
-  .page{
+@media (max-width: 640px) {
+  .page {
     align-content: center;
     align-items: flex-end;
     display: flex;
@@ -25,29 +27,20 @@
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  img{
+  img {
     object-fit: contain;
   }
-  .poster{
+  .poster {
     margin-top: 0;
     margin-left: 0;
     width: 100vw;
   }
-  .field{
+  .field {
     margin-left: 0px;
     width: 100vw;
     display: flex;
   }
-
 }
-
-
-
-
-
-
-
-
 
 body {
   font-family: "Montserrat", sans-serif;
