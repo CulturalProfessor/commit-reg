@@ -21,43 +21,39 @@ const PORT = process.env.PORT || 5000;
 // };
 const app = express();
 
-const corsOptions = {
-  origin: "*",
-  credentials: true,
-  optionSuccessStatus: 200,
-  allowedHeaders: [
-    "Accept",
-    "Content-Type",
-    "Referer",
-    "Access-Control-Allow-Origin",
-    "Sec-Ch-Ua",
-    "Sec-Ch-Ua-Mobile",
-    "Sec-Ch-Ua-Platform",
-    "User-Agent",
-  ],
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "*",
+//   credentials: true,
+//   optionSuccessStatus: 200,
+//   allowedHeaders: [
+//     "Accept",
+//     "Content-Type",
+//     "Referer",
+//     "Access-Control-Allow-Origin",
+//     "Sec-Ch-Ua",
+//     "Sec-Ch-Ua-Mobile",
+//     "Sec-Ch-Ua-Platform",
+//     "User-Agent",
+//   ],
+// };
+// app.use(cors(corsOptions));
 // app.options("*", cors(corsOptions));
 app.use(ExpressMongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", routes, (req, res) => {
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Origin", "https://ossrndc.in");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
-  }
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 });
+
+app.use("/", routes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
