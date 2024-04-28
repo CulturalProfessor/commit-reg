@@ -136,13 +136,6 @@ function getEmail() {
 }
 export const create = async (req, res) => {
   try {
-    res.setHeader("Access-Control-Allow-Origin", "https://ossrndc.in");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-
     // console.log(req.body);
     const encryptedData = req.body.encryptedData;
     const decryptedData = CryptoJS.AES.decrypt(

@@ -22,9 +22,18 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 const corsOptions = {
-  origin: "https://ossrndc.in",
+  origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
+  allowedHeaders: [
+    "Accept",
+    "Content-Type",
+    "Referer",
+    "Sec-Ch-Ua",
+    "Sec-Ch-Ua-Mobile",
+    "Sec-Ch-Ua-Platform",
+    "User-Agent",
+  ],
 };
 app.use(cors(corsOptions));
 app.use(ExpressMongoSanitize());
