@@ -29,6 +29,7 @@ const corsOptions = {
     "Accept",
     "Content-Type",
     "Referer",
+    "Access-Control-Allow-Origin",
     "Sec-Ch-Ua",
     "Sec-Ch-Ua-Mobile",
     "Sec-Ch-Ua-Platform",
