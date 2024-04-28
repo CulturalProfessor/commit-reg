@@ -123,6 +123,7 @@ export default function InputForm() {
           secretKey
         ).toString();
 
+        
         // Send the encrypted form data to the server
         axios({
           method: "post",

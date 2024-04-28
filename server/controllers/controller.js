@@ -112,6 +112,7 @@ async function isEmailValid(email) {
   return emailValidator.validate(email);
 }
 
+
 function getEmail() {
   // return your html component here
   return {
