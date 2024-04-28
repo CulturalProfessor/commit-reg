@@ -136,7 +136,7 @@ function getEmail() {
 }
 export const create = async (req, res) => {
   try {
-    // console.log(req.body);
+    console.log(req.body);
     const encryptedData = req.body.encryptedData;
     const decryptedData = CryptoJS.AES.decrypt(
       encryptedData,
