@@ -265,8 +265,8 @@ export default function InputForm() {
                 // id="select-box"
               >
                 <option value="" disabled label="Year ?"></option>
-                <option value="second">I</option>
-                <option value="third">II</option>
+                <option value="First">I</option>
+                <option value="Second">II</option>
               </select>
             </div>
 
