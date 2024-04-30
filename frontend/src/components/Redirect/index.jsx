@@ -9,8 +9,7 @@ export default function Redirect() {
         <h2 className="formHeadingElement">Team OSS</h2>
       </div>
       <h2>
-        Your Online registrations was a success, please visit our help desk for
-        workshop payment
+        Thanks for your Response, Registrations are closed now.
       </h2>
       <img src="/success.png" id="redirectImage" />
     </div>
